@@ -1,4 +1,3 @@
-
 import streamlit as st
 import plotly.express as px
 from PIL import Image
@@ -51,7 +50,6 @@ st.markdown(
         transition: all 0.3s ease-in-out !important;
         text-decoration: none !important;
         
-        /* KUNCI KESEIMBANGAN: Batasi lebar maksimal tombol */
         display: inline-flex !important;
         width: auto !important;
         max-width: 320px !important; 
@@ -85,7 +83,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Menggunakan kembali rasio kolom asli agar pembagian ruangnya pas
 col_btn, col_title = st.columns([1.2, 2.8])
 
 with col_btn:
@@ -106,42 +103,36 @@ except FileNotFoundError:
     st.stop()
 
 # ==============================================================================
-# 5. DATA KOORDINAT XY (Ditambah Sorotan QCD Tanpa Mengubah Animasi Awal)
+# 5. DATA KOORDINAT XY (Gerakan Atas dan Bawah Digabung Secara Barengan)
 # ==============================================================================
 process_phases = [
-    # --- FASE 1: PARAMETER INPUT & INTERVENSI HULU (ASLI - TIDAK BERUBAH) ---
+    # --- FASE 1: PARAMETER INPUT (ATAS) + LINGKARAN TIME (BAWAH) ---
     [
+        # Koordinat Asli Atas (Tidak Dikotak-katik)
         {'label': '', 'tank_area': [152, 40, 268, 94]},
         {'label': '', 'tank_area': [74, 155, 203, 231]},
         {'label': '', 'tank_area': [720, 232, 851, 293]},
-        {'label': '', 'tank_area': [872, 18, 996, 83]}
+        {'label': '', 'tank_area': [872, 18, 996, 83]},
+        # Tambahan Bawah (Barengan)
+        {'label': '', 'tank_area': [385, 625, 510, 800]} # Lingkaran Time (Hijau)
     ],
     
-    # --- FASE 2: LAJU ALIRAN SISTEM (FLOWS) (ASLI - TIDAK BERUBAH) ---
+    # --- FASE 2: LAJU ALIRAN/FLOWS (ATAS) + LINGKARAN QUALITY (BAWAH) ---
     [
+        # Koordinat Asli Atas (Tidak Dikotak-katik)
         {'label': '', 'tank_area': [271, 93, 428, 169]},
-        {'label': '', 'tank_area': [779, 88, 925, 165]}
+        {'label': '', 'tank_area': [779, 88, 925, 165]},
+        # Tambahan Bawah (Barengan)
+        {'label': '', 'tank_area': [440, 770, 560, 950]} # Lingkaran Quality (Biru)
     ],
     
-    # --- FASE 3: AKUMULASI STOK UTAMA (STOCKS) (ASLI - TIDAK BERUBAH) ---
+    # --- FASE 3: AKUMULASI STOK/STOCKS (ATAS) + LINGKARAN COST (BAWAH) ---
     [
+        # Koordinat Asli Atas (Tidak Dikotak-katik)
         {'label': '', 'tank_area': [465, 75, 606, 161]},
-        {'label': '', 'tank_area': [621, 80, 751, 177]}
-    ],
-
-    # --- TAMBAHAN BARU: FASE 4 - LINGKARAN TIME (DELIVERY) ---
-    [
-        {'label': '', 'tank_area': [385, 625, 510, 800]} 
-    ],
-
-    # --- TAMBAHAN BARU: FASE 5 - LINGKARAN QUALITY ---
-    [
-        {'label': '', 'tank_area': [440, 770, 560, 950]} 
-    ],
-
-    # --- TAMBAHAN BARU: FASE 6 - LINGKARAN COST ---
-    [
-        {'label': '', 'tank_area': [335, 770, 455, 950]} 
+        {'label': '', 'tank_area': [621, 80, 751, 177]},
+        # Tambahan Bawah (Barengan)
+        {'label': '', 'tank_area': [335, 770, 455, 950]} # Lingkaran Cost (Jingga)
     ]
 ]
 
