@@ -115,7 +115,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [720, 232, 851, 293]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [872, 18, 996, 83]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [385, 625, 510, 800]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [539,388,700,536]} 
     ],
     
     # --- FASE 2: LAJU ALIRAN/FLOWS (ATAS) + LINGKARAN QUALITY (BAWAH) ---
@@ -124,7 +124,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [271, 93, 428, 169]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [779, 88, 925, 165]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [440, 770, 560, 950]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [600,505,763,655]} 
     ],
     
     # --- FASE 3: AKUMULASI STOK/STOCKS (ATAS) + LINGKARAN COST (BAWAH) ---
@@ -133,7 +133,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [465, 75, 606, 161]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [621, 80, 751, 177]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [335, 770, 455, 950]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [475,500,641,656]} 
     ]
 ]
 
