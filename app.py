@@ -39,7 +39,7 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-    /* 1. Mengatur Ukuran Kotak Tombol Agar Seimbang (Tidak Terlalu Besar) */
+    /* 1. Mengatur Ukuran Kotak Tombol Agar Seimbang */
     .stLinkButton > a {
         background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%) !important;
         color: #FFFFFF !important;
@@ -103,36 +103,36 @@ except FileNotFoundError:
     st.stop()
 
 # ==============================================================================
-# 5. DATA KOORDINAT XY (Gerakan Atas dan Bawah Digabung Secara Barengan)
+# 5. DATA KOORDINAT XY (Atas Kotak, Bawah Lingkaran/Circle)
 # ==============================================================================
 process_phases = [
     # --- FASE 1: PARAMETER INPUT (ATAS) + LINGKARAN TIME (BAWAH) ---
     [
-        # Koordinat Asli Atas (Tidak Dikotak-katik)
-        {'label': '', 'tank_area': [152, 40, 268, 94]},
-        {'label': '', 'tank_area': [74, 155, 203, 231]},
-        {'label': '', 'tank_area': [720, 232, 851, 293]},
-        {'label': '', 'tank_area': [872, 18, 996, 83]},
-        # Tambahan Bawah (Barengan)
-        {'label': '', 'tank_area': [385, 625, 510, 800]} # Lingkaran Time (Hijau)
+        # Koordinat Asli Atas (Bentuk Kotak)
+        {'label': '', 'shape_type': 'rect', 'tank_area': [152, 40, 268, 94]},
+        {'label': '', 'shape_type': 'rect', 'tank_area': [74, 155, 203, 231]},
+        {'label': '', 'shape_type': 'rect', 'tank_area': [720, 232, 851, 293]},
+        {'label': '', 'shape_type': 'rect', 'tank_area': [872, 18, 996, 83]},
+        # Tambahan Bawah (Bentuk Lingkaran/Circle)
+        {'label': '', 'shape_type': 'circle', 'tank_area': [385, 625, 510, 800]} 
     ],
     
     # --- FASE 2: LAJU ALIRAN/FLOWS (ATAS) + LINGKARAN QUALITY (BAWAH) ---
     [
-        # Koordinat Asli Atas (Tidak Dikotak-katik)
-        {'label': '', 'tank_area': [271, 93, 428, 169]},
-        {'label': '', 'tank_area': [779, 88, 925, 165]},
-        # Tambahan Bawah (Barengan)
-        {'label': '', 'tank_area': [440, 770, 560, 950]} # Lingkaran Quality (Biru)
+        # Koordinat Asli Atas (Bentuk Kotak)
+        {'label': '', 'shape_type': 'rect', 'tank_area': [271, 93, 428, 169]},
+        {'label': '', 'shape_type': 'rect', 'tank_area': [779, 88, 925, 165]},
+        # Tambahan Bawah (Bentuk Lingkaran/Circle)
+        {'label': '', 'shape_type': 'circle', 'tank_area': [440, 770, 560, 950]} 
     ],
     
     # --- FASE 3: AKUMULASI STOK/STOCKS (ATAS) + LINGKARAN COST (BAWAH) ---
     [
-        # Koordinat Asli Atas (Tidak Dikotak-katik)
-        {'label': '', 'tank_area': [465, 75, 606, 161]},
-        {'label': '', 'tank_area': [621, 80, 751, 177]},
-        # Tambahan Bawah (Barengan)
-        {'label': '', 'tank_area': [335, 770, 455, 950]} # Lingkaran Cost (Jingga)
+        # Koordinat Asli Atas (Bentuk Kotak)
+        {'label': '', 'shape_type': 'rect', 'tank_area': [465, 75, 606, 161]},
+        {'label': '', 'shape_type': 'rect', 'tank_area': [621, 80, 751, 177]},
+        # Tambahan Bawah (Bentuk Lingkaran/Circle)
+        {'label': '', 'shape_type': 'circle', 'tank_area': [335, 770, 455, 950]} 
     ]
 ]
 
@@ -150,13 +150,14 @@ while True:
         fig.update_xaxes(visible=False, showgrid=False)
         fig.update_yaxes(visible=False, showgrid=False)
         
-        # Gambar ulang kotak animasi hijau di tiap fase
+        # Gambar ulang kotak/lingkaran animasi hijau di tiap fase
         for component in phase:
             area = component['tank_area']
+            shape = component.get('shape_type', 'rect') # Ambil tipe bentuk, default ke 'rect' jika tidak diset
             
-            # 1. Menggambar Kotak Sorotan Hijau
+            # 1. Menggambar Bentuk Sorotan (Bisa Kotak atau Lingkaran secara dinamis)
             fig.add_shape(
-                type="rect", 
+                type=shape, 
                 x0=area[0], y0=area[1], x1=area[2], y1=area[3],
                 fillcolor="rgba(0, 255, 0, 0.35)",
                 line=dict(color="LimeGreen", width=3),
@@ -177,7 +178,7 @@ while True:
         
         fig.update_layout(
             margin=dict(l=0, r=0, t=15, b=0), 
-            height=720, # Tinggi layout dioptimalkan agar diagram atas dan QCD bawah terlihat semua
+            height=720, 
             autosize=True,
             showlegend=False
         )
