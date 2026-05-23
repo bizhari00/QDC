@@ -44,13 +44,12 @@ st.markdown(
         background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%) !important;
         color: #FFFFFF !important;
         border: none !important;
-        border-radius: 8px !important; /* Lengkungan sedikit dikurangi agar lebih formal */
-        padding: 8px 20px !important; /* Padding vertikal dikurangi agar kotak lebih tipis */
+        border-radius: 8px !important;
+        padding: 8px 20px !important;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
         transition: all 0.3s ease-in-out !important;
         text-decoration: none !important;
         
-        /* KUNCI KESEIMBANGAN: Batasi lebar maksimal tombol */
         display: inline-flex !important;
         width: auto !important;
         max-width: 320px !important; 
@@ -58,7 +57,7 @@ st.markdown(
 
     /* 2. Menyesuaikan Ukuran Font Tombol */
     .stLinkButton > a p {
-        font-size: 16px !important; /* Ukuran diturunkan ke 16px agar proporsional */
+        font-size: 16px !important;
         font-weight: bold !important;
         color: #FFFFFF !important;
         letter-spacing: 0.5px !important;
@@ -76,7 +75,7 @@ st.markdown(
         font-size: 20px !important; 
         font-weight: 500 !important;
         color: #1E293B;
-        margin-top: 8px; /* Disesuaikan agar sejajar lurus vertikal dengan tombol baru */
+        margin-top: 8px;
         font-family: 'Segoe UI', Arial, sans-serif;
     }
     </style>
@@ -84,11 +83,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Menggunakan kembali rasio kolom asli agar pembagian ruangnya pas
 col_btn, col_title = st.columns([1.2, 2.8])
 
 with col_btn:
-    # use_container_width diubah ke False agar lebarnya mengikuti aturan CSS max-width di atas
     st.link_button("🏠 Tri-Sen Technology Open Here", "https://forio.com/app/trisen_syntegra/trisen2", use_container_width=False)
 
 with col_title:
@@ -97,16 +94,16 @@ with col_title:
 st.divider()
 
 # ==============================================================================
-# 4. MEMUAT BACKGROUND IMAGE PKS
+# 4. MEMUAT BACKGROUND IMAGE PKS (qcd.png)
 # ==============================================================================
 try:
     img = Image.open("qcd.png") 
 except FileNotFoundError:
-    st.error("File 'SFDintro.png' tidak ditemukan. Pastikan file gambar diagram Anda ada di root repository GitHub Anda dan namanya sesuai.")
+    st.error("File 'qcd.png' tidak ditemukan. Pastikan file gambar diagram baru Anda ada di root repository GitHub Anda dan namanya sesuai.")
     st.stop()
 
 # ==============================================================================
-# 5. DATA KOORDINAT XY (Untuk Animasi Sorotan Hijau)
+# 5. DATA KOORDINAT XY (Lengkap dengan Animasi Diagram + Lingkaran QCD)
 # ==============================================================================
 process_phases = [
     # --- FASE 1: PARAMETER INPUT & INTERVENSI HULU ---
@@ -119,14 +116,29 @@ process_phases = [
     
     # --- FASE 2: LAJU ALIRAN SISTEM (FLOWS) ---
     [
-        {'label': '', 'tank_area': [271, 93, 428, 169]},
-        {'label': '', 'tank_area': [779, 88, 925, 165]}
+        {'label': '', 'tank_area': [180, 210, 310, 325]},  # Trip Occurrence Rate
+        {'label': '', 'tank_area': [565, 210, 680, 325]}   # Continuous Cost Flow
     ],
     
     # --- FASE 3: AKUMULASI STOK UTAMA (STOCKS) ---
     [
-        {'label': '', 'tank_area': [465, 75, 606, 161]},
-        {'label': '', 'tank_area': [621, 80, 751, 177]}
+        {'label': '', 'tank_area': [340, 210, 430, 315]},  # Cumulative Trip Frequency
+        {'label': '', 'tank_area': [460, 210, 545, 315]}   # Total Cost Ownership
+    ],
+
+    # --- FASE 4: LINGKARAN TIME (DELIVERY) ---
+    [
+        {'label': '', 'tank_area': [390, 625, 505, 835]}   # Koordinat Estimasi Lingkaran Hijau (Time)
+    ],
+
+    # --- FASE 5: LINGKARAN QUALITY ---
+    [
+        {'label': '', 'tank_area': [445, 775, 555, 985]}   # Koordinat Estimasi Lingkaran Biru (Quality)
+    ],
+
+    # --- FASE 6: LINGKARAN COST ---
+    [
+        {'label': '', 'tank_area': [340, 775, 455, 985]}   # Koordinat Estimasi Lingkaran Jingga (Cost)
     ]
 ]
 
@@ -156,7 +168,7 @@ while True:
                 line=dict(color="LimeGreen", width=3),
             )
             
-            # 2. Koordinat Label Dinamis (Jika nanti ingin diberi teks label)
+            # 2. Koordinat Label Dinamis
             text_x = (area[0] + area[2]) / 2
             text_y = area[3] + 20
             
@@ -171,7 +183,7 @@ while True:
         
         fig.update_layout(
             margin=dict(l=0, r=0, t=15, b=0), 
-            height=550,
+            height=700, # Ditambah menjadi 700 agar muat menampilkan bagian bawah gambar tanpa terpotong
             autosize=True,
             showlegend=False
         )
@@ -181,7 +193,7 @@ while True:
                 fig, 
                 use_container_width=True, 
                 config={
-                    'displayModeBar': False, # Toolbar atas plotly dimatikan agar bersih
+                    'displayModeBar': False, 
                     'responsive': True
                 }, 
                 key=f"pks_live_mode_{render_count}"
