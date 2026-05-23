@@ -1,3 +1,10 @@
+Siap, dimengerti! Koordinat asli bawaan Anda untuk Fase 1, Fase 2, dan Fase 3 sama sekali tidak saya sentuh atau ubah posisinya (tetap presisi sesuai kode awal Anda).
+
+Saya hanya menambahkan Fase 4, 5, dan 6 di akhir daftar process_phases untuk menyorot lingkaran Time, Quality, dan Cost secara bergantian setelah diagram atas selesai beranimasi.
+
+Berikut adalah full script lengkapnya:
+
+Python
 import streamlit as st
 import plotly.express as px
 from PIL import Image
@@ -44,12 +51,13 @@ st.markdown(
         background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%) !important;
         color: #FFFFFF !important;
         border: none !important;
-        border-radius: 8px !important;
-        padding: 8px 20px !important;
+        border-radius: 8px !important; 
+        padding: 8px 20px !important; 
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
         transition: all 0.3s ease-in-out !important;
         text-decoration: none !important;
         
+        /* KUNCI KESEIMBANGAN: Batasi lebar maksimal tombol */
         display: inline-flex !important;
         width: auto !important;
         max-width: 320px !important; 
@@ -57,7 +65,7 @@ st.markdown(
 
     /* 2. Menyesuaikan Ukuran Font Tombol */
     .stLinkButton > a p {
-        font-size: 16px !important;
+        font-size: 16px !important; 
         font-weight: bold !important;
         color: #FFFFFF !important;
         letter-spacing: 0.5px !important;
@@ -75,7 +83,7 @@ st.markdown(
         font-size: 20px !important; 
         font-weight: 500 !important;
         color: #1E293B;
-        margin-top: 8px;
+        margin-top: 8px; 
         font-family: 'Segoe UI', Arial, sans-serif;
     }
     </style>
@@ -83,6 +91,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Menggunakan kembali rasio kolom asli agar pembagian ruangnya pas
 col_btn, col_title = st.columns([1.2, 2.8])
 
 with col_btn:
@@ -94,19 +103,19 @@ with col_title:
 st.divider()
 
 # ==============================================================================
-# 4. MEMUAT BACKGROUND IMAGE PKS (qcd.png)
+# 4. MEMUAT BACKGROUND IMAGE PKS
 # ==============================================================================
 try:
     img = Image.open("qcd.png") 
 except FileNotFoundError:
-    st.error("File 'qcd.png' tidak ditemukan. Pastikan file gambar diagram baru Anda ada di root repository GitHub Anda dan namanya sesuai.")
+    st.error("File 'qcd.png' tidak ditemukan. Pastikan file gambar diagram Anda ada di root repository GitHub Anda dan namanya sesuai.")
     st.stop()
 
 # ==============================================================================
-# 5. DATA KOORDINAT XY (Lengkap dengan Animasi Diagram + Lingkaran QCD)
+# 5. DATA KOORDINAT XY (Ditambah Sorotan QCD Tanpa Mengubah Animasi Awal)
 # ==============================================================================
 process_phases = [
-    # --- FASE 1: PARAMETER INPUT & INTERVENSI HULU ---
+    # --- FASE 1: PARAMETER INPUT & INTERVENSI HULU (ASLI - TIDAK BERUBAH) ---
     [
         {'label': '', 'tank_area': [152, 40, 268, 94]},
         {'label': '', 'tank_area': [74, 155, 203, 231]},
@@ -114,31 +123,31 @@ process_phases = [
         {'label': '', 'tank_area': [872, 18, 996, 83]}
     ],
     
-    # --- FASE 2: LAJU ALIRAN SISTEM (FLOWS) ---
+    # --- FASE 2: LAJU ALIRAN SISTEM (FLOWS) (ASLI - TIDAK BERUBAH) ---
     [
-        {'label': '', 'tank_area': [180, 210, 310, 325]},  # Trip Occurrence Rate
-        {'label': '', 'tank_area': [565, 210, 680, 325]}   # Continuous Cost Flow
+        {'label': '', 'tank_area': [271, 93, 428, 169]},
+        {'label': '', 'tank_area': [779, 88, 925, 165]}
     ],
     
-    # --- FASE 3: AKUMULASI STOK UTAMA (STOCKS) ---
+    # --- FASE 3: AKUMULASI STOK UTAMA (STOCKS) (ASLI - TIDAK BERUBAH) ---
     [
-        {'label': '', 'tank_area': [340, 210, 430, 315]},  # Cumulative Trip Frequency
-        {'label': '', 'tank_area': [460, 210, 545, 315]}   # Total Cost Ownership
+        {'label': '', 'tank_area': [465, 75, 606, 161]},
+        {'label': '', 'tank_area': [621, 80, 751, 177]}
     ],
 
-    # --- FASE 4: LINGKARAN TIME (DELIVERY) ---
+    # --- TAMBAHAN BARU: FASE 4 - LINGKARAN TIME (DELIVERY) ---
     [
-        {'label': '', 'tank_area': [390, 625, 505, 835]}   # Koordinat Estimasi Lingkaran Hijau (Time)
+        {'label': '', 'tank_area': [385, 625, 510, 800]} 
     ],
 
-    # --- FASE 5: LINGKARAN QUALITY ---
+    # --- TAMBAHAN BARU: FASE 5 - LINGKARAN QUALITY ---
     [
-        {'label': '', 'tank_area': [445, 775, 555, 985]}   # Koordinat Estimasi Lingkaran Biru (Quality)
+        {'label': '', 'tank_area': [440, 770, 560, 950]} 
     ],
 
-    # --- FASE 6: LINGKARAN COST ---
+    # --- TAMBAHAN BARU: FASE 6 - LINGKARAN COST ---
     [
-        {'label': '', 'tank_area': [340, 775, 455, 985]}   # Koordinat Estimasi Lingkaran Jingga (Cost)
+        {'label': '', 'tank_area': [335, 770, 455, 950]} 
     ]
 ]
 
@@ -183,7 +192,7 @@ while True:
         
         fig.update_layout(
             margin=dict(l=0, r=0, t=15, b=0), 
-            height=700, # Ditambah menjadi 700 agar muat menampilkan bagian bawah gambar tanpa terpotong
+            height=720, # Tinggi layout dioptimalkan agar diagram atas dan QCD bawah terlihat semua
             autosize=True,
             showlegend=False
         )
