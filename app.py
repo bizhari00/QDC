@@ -100,7 +100,7 @@ st.divider()
 # 4. MEMUAT BACKGROUND IMAGE PKS
 # ==============================================================================
 try:
-    img = Image.open("trisenqdc.png") 
+    img = Image.open("qcd.png") 
 except FileNotFoundError:
     st.error("File 'SFDintro.png' tidak ditemukan. Pastikan file gambar diagram Anda ada di root repository GitHub Anda dan namanya sesuai.")
     st.stop()
