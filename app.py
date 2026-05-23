@@ -1,10 +1,4 @@
-Tentu bisa! Untuk membuat warna lingkaran di bawah menjadi lebih tajam dan mencolok, kita bisa mengubah warna garis tepi (border) menjadi lebih terang (misal: warna hijau stabilo/neon atau merah) serta meningkatkan ketebalan garisnya (width).
 
-Kita juga bisa membedakan warna khusus untuk lingkaran (circle) agar tidak bercampur dengan gaya kotak hijau di atas.
-
-Berikut adalah full script yang sudah diperbarui dengan pengaturan warna lingkaran bawah yang jauh lebih tajam dan tebal:
-
-Python
 import streamlit as st
 import plotly.express as px
 from PIL import Image
