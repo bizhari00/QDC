@@ -1,10 +1,4 @@
-Siap, dimengerti! Koordinat asli bawaan Anda untuk Fase 1, Fase 2, dan Fase 3 sama sekali tidak saya sentuh atau ubah posisinya (tetap presisi sesuai kode awal Anda).
 
-Saya hanya menambahkan Fase 4, 5, dan 6 di akhir daftar process_phases untuk menyorot lingkaran Time, Quality, dan Cost secara bergantian setelah diagram atas selesai beranimasi.
-
-Berikut adalah full script lengkapnya:
-
-Python
 import streamlit as st
 import plotly.express as px
 from PIL import Image
