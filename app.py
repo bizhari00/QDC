@@ -123,7 +123,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [271, 93, 428, 169]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [779, 88, 925, 165]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [598, 505, 762, 656} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [598, 505, 762, 656]} 
     ],
     
     # --- FASE 3: AKUMULASI STOK/STOCKS (ATAS) + LINGKARAN COST (BAWAH) ---
