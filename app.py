@@ -1,3 +1,10 @@
+Tentu bisa! Untuk membuat warna lingkaran di bawah menjadi lebih tajam dan mencolok, kita bisa mengubah warna garis tepi (border) menjadi lebih terang (misal: warna hijau stabilo/neon atau merah) serta meningkatkan ketebalan garisnya (width).
+
+Kita juga bisa membedakan warna khusus untuk lingkaran (circle) agar tidak bercampur dengan gaya kotak hijau di atas.
+
+Berikut adalah full script yang sudah diperbarui dengan pengaturan warna lingkaran bawah yang jauh lebih tajam dan tebal:
+
+Python
 import streamlit as st
 import plotly.express as px
 from PIL import Image
@@ -114,7 +121,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [720, 232, 851, 293]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [872, 18, 996, 83]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [529, 389, 698, 532]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [385, 625, 510, 800]} 
     ],
     
     # --- FASE 2: LAJU ALIRAN/FLOWS (ATAS) + LINGKARAN QUALITY (BAWAH) ---
@@ -123,7 +130,7 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [271, 93, 428, 169]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [779, 88, 925, 165]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [598, 505, 762, 656]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [440, 770, 560, 950]} 
     ],
     
     # --- FASE 3: AKUMULASI STOK/STOCKS (ATAS) + LINGKARAN COST (BAWAH) ---
@@ -132,12 +139,12 @@ process_phases = [
         {'label': '', 'shape_type': 'rect', 'tank_area': [465, 75, 606, 161]},
         {'label': '', 'shape_type': 'rect', 'tank_area': [621, 80, 751, 177]},
         # Tambahan Bawah (Bentuk Lingkaran/Circle)
-        {'label': '', 'shape_type': 'circle', 'tank_area': [468, 502, 636, 652]} 
+        {'label': '', 'shape_type': 'circle', 'tank_area': [335, 770, 455, 950]} 
     ]
 ]
 
 # ==============================================================================
-# 6. RENDERING LOGIC (MODE NORMAL + ANIMASI TANPA GRID)
+# 6. RENDERING LOGIC (DENGAN WARNA TAJAM KHUSUS LINGKARAN)
 # ==============================================================================
 placeholder = st.empty()
 render_count = 0
@@ -150,24 +157,34 @@ while True:
         fig.update_xaxes(visible=False, showgrid=False)
         fig.update_yaxes(visible=False, showgrid=False)
         
-        # Gambar ulang kotak/lingkaran animasi hijau di tiap fase
+        # Gambar ulang kotak/lingkaran animasi di tiap fase
         for component in phase:
             area = component['tank_area']
-            shape = component.get('shape_type', 'rect') # Ambil tipe bentuk, default ke 'rect' jika tidak diset
+            shape = component.get('shape_type', 'rect')
             
-            # 1. Menggambar Bentuk Sorotan (Bisa Kotak atau Lingkaran secara dinamis)
+            # ATUR WARNA DI SINI: Jika bentuknya lingkaran, buat warnanya jauh lebih tajam
+            if shape == 'circle':
+                border_color = "Cyan"       # Warna garis luar cyan neon yang sangat tajam
+                border_width = 5            # Garis dipertebal dari 3 menjadi 5 agar sangat mencolok
+                fill_color = "rgba(0, 255, 255, 0.4)" # Isi dalam semi-transparan cyan terang
+            else:
+                border_color = "LimeGreen"  # Warna kotak atas tetap hijau asli Anda
+                border_width = 3
+                fill_color = "rgba(0, 255, 0, 0.35)"
+            
+            # Menggambar Bentuk Sorotan Dinamis
             fig.add_shape(
                 type=shape, 
                 x0=area[0], y0=area[1], x1=area[2], y1=area[3],
-                fillcolor="rgba(0, 255, 0, 0.35)",
-                line=dict(color="LimeGreen", width=3),
+                fillcolor=fill_color,
+                line=dict(color=border_color, width=border_width),
             )
             
-            # 2. Koordinat Label Dinamis
+            # Koordinat Label Dinamis
             text_x = (area[0] + area[2]) / 2
             text_y = area[3] + 20
             
-            # 3. Tempel Label Teks
+            # Tempel Label Teks
             fig.add_scatter(
                 x=[text_x], y=[text_y], 
                 mode="text",
